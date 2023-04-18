@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import signUp from '../assets/signup.gif';
 import { BiHide, BiShow } from 'react-icons/bi';
+import toast, { Toaster } from 'react-hot-toast';
+
 import {useFormik} from 'formik'
 import * as Yup from 'yup';
 
@@ -25,6 +27,10 @@ const Signup = () => {
       confirmPassword: Yup.string().oneOf([Yup.ref('password'),null], 'Passwords must match..!')
     }),
     onSubmit: values => {
+      toast('Successfully Registered...!', {
+        icon: '👍',
+        style: { backgroundColor: 'green', color: 'white' },
+      });
       console.log(values);
     }
   })
@@ -41,6 +47,7 @@ const Signup = () => {
 
   return (
     <div className='p-3 md:p-4'>
+      <Toaster position='top-center' reverseOrder={false} />
       <div className='w-full max-w-sm bg-white m-auto flex flex-col items-center p-4'>
         {/* <h1 className='text-center text-2xl font-bold'>SignUp</h1> */}
         <div className='w-20 overflow-hidden drop-shadow-md shadow-md rounded-full '>
