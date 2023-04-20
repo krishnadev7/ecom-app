@@ -42,22 +42,15 @@ const Signup = () => {
       values = await Object.assign(values, {
         profileImage: uploadedImage || '',
       });
-      let signUpPromise = SignUp(values);
-      toast.promise(signUpPromise,{
-        loading: 'creating..',
-        success: <b>Register Successfully...!</b>,
-        error: <b>could not register</b>
-      })
-      signUpPromise.then(function() {navigate('/login')})
+      SignUp(values);
+      setTimeout(() => {
+        navigate('/login');
+      }, 4000);
+      // signUpPromise.then(function() {navigate('/login')})
       // toast('Successfully Registered...!', {
       //   icon: '👍',
       //   style: { backgroundColor: 'green', color: 'white' },
       // });
-
-      // setTimeout(() => {
-      //   navigate('/login');
-      // }, 4000);
-
       // console.log(values);
     },
   });
