@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import signUp from '../assets/signup.gif';
 import { BiHide, BiShow } from 'react-icons/bi';
 import toast, { Toaster } from 'react-hot-toast';
@@ -8,6 +8,7 @@ import {useFormik} from 'formik'
 import * as Yup from 'yup';
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmPassword] = useState(false);
 
@@ -24,13 +25,18 @@ const Signup = () => {
       lastName: Yup.string().required('lastname is required'),
       email: Yup.string().email('Invalid email address').required('email is required'),
       password: Yup.string().min(6, 'Password must be 6 characters long').required('password is required'),
-      confirmPassword: Yup.string().oneOf([Yup.ref('password'),null], 'Passwords must match..!')
+      confirmPassword: Yup.string().oneOf([Yup.ref('password'),null], 'Passwords must match..!').required("Please confirm your password..!")
     }),
     onSubmit: values => {
       toast('Successfully Registered...!', {
         icon: '👍',
         style: { backgroundColor: 'green', color: 'white' },
       });
+
+      setTimeout(() => {
+       navigate('/login');
+      },4000);
+      
       console.log(values);
     }
   })
