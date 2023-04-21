@@ -7,9 +7,16 @@ import { LogIn } from '../utils/helper';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRedux } from '../redux/userSlice';
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const userData = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  // console.log(userData);
+
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -30,14 +37,17 @@ const Login = () => {
     onSubmit: async values => {
       LogIn(values)
         .then(data => {
+          dispatch(loginRedux(data));
           toast.success(data.msg);
+          console.log(userData);
         })
         .then(data =>
           setTimeout(() => {
             navigate('/');
           }, 3000)
         );
-      console.log(values);
+        // console.log(userData);
+      // console.log(values);
     },
   });
 

@@ -40,12 +40,4 @@ export async function LogIn(creds){
     console.log(error);
     return toast.error(error);
   }
-  // try {
-  //     const {data} = await axios.post(`${base_server_url}/login`, creds);
-  //     console.log(data);
-      
-  // } catch (error) {
-  //   console.log(error);
-  //   return toast.error(error);
-  // }
 }
