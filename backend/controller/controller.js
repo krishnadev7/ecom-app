@@ -26,4 +26,25 @@ const signup = async(req,res) => {
     }
 }
 
-module.exports = signup
+/** http://localhost:8000/api/login */
+const login = async (req,res) => {
+    try {
+        const isEmail = await User.findOne({email: req.body.email});
+
+        if(!isEmail){
+            return res.status(404).json({msg:"User doesn't exist with this email id..!",alert:false});
+        }
+
+        const passCheck = await bcrypt.compare(req.body.password,isEmail.password);
+        if(!passCheck){
+            return res.status(400).json({msg:"invalid password...!",alert:false});
+        }
+        const {password,...data} = isEmail._doc;
+        return res.status(200).json({msg:"Login Successfully",alert:true, data});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({msg: error})
+    }
+}
+
+module.exports = {signup,login}

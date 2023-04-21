@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import signUp from '../assets/signup.gif';
 import { BiHide, BiShow } from 'react-icons/bi';
 import toast, { Toaster } from 'react-hot-toast';
+import { LogIn } from '../utils/helper';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -25,11 +27,16 @@ const Login = () => {
         .required('password is required'),
     }),
 
-    onSubmit: values => {
-      toast('Successfull Login...!', {
-        icon: '👍',
-        style: { backgroundColor: 'green', color: 'white' },
-      });
+    onSubmit: async values => {
+      LogIn(values)
+        .then(data => {
+          toast.success(data.msg);
+        })
+        .then(data =>
+          setTimeout(() => {
+            navigate('/');
+          }, 3000)
+        );
       console.log(values);
     },
   });
