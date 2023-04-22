@@ -3,9 +3,12 @@ import logo from '../assets/cart.png';
 import { HiShoppingCart } from 'react-icons/hi';
 import { FaUserCircle } from 'react-icons/fa';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
+
+  const {user} = useSelector((state)=>state.user);
 
   const handleChangeMenu = e => {
     e.preventDefault();
@@ -41,20 +44,33 @@ const Header = () => {
             </div>
           </div>
           <div
-            className='text-orange-400 text-3xl cursor-pointer'
+            className='text-orange-400 text-3xl cursor-pointer  '
             onClick={handleChangeMenu}
           >
-            {<FaUserCircle />}
+            {user.profileImage ? (
+              <img
+                src={user.profileImage}
+                className='w-10 h-10 rounded-full overflow-hidden drop-shadow-md'
+              />
+            ) : (
+              <FaUserCircle />
+            )}
             {showMenu && (
               <div className='absolute right-2 text-lg text-black bg-white shadow drop-shadow-md py-2 px-2'>
                 <Link to='newproduct'>
                   <p className='whitespace-nowrap cursor-pointer'>
                     New Product
-                  </p>
+                  </p> 
                 </Link>
-                <Link to='login'>
-                  <p className='whitespace-nowrap cursor-pointer'>Login</p>
-                </Link>
+                {user ? (
+                  <Link to='logout'>
+                    <p className='whitespace-nowrap cursor-pointer bg-red-500 hover:bg-red-400 text-white rounded-md text-center mt-1'>Logout</p>
+                  </Link>
+                ) : (
+                  <Link to='login'>
+                    <p className='whitespace-nowrap cursor-pointer'>Login</p>
+                  </Link>
+                )}
               </div>
             )}
           </div>

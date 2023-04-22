@@ -39,14 +39,12 @@ const Login = () => {
         .then(data => {
           dispatch(loginRedux(data));
           toast.success(data.msg);
-          console.log(userData);
         })
         .then(data =>
           setTimeout(() => {
             navigate('/');
-          }, 3000)
+          }, 1000)
         );
-        // console.log(userData);
       // console.log(values);
     },
   });
