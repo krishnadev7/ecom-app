@@ -12,7 +12,6 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const {user} = useSelector((state)=>state.user);
-  console.log(user);
 
   const handleChangeMenu = e => {
     e.preventDefault();
