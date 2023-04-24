@@ -3,17 +3,27 @@ import logo from '../assets/cart.png';
 import { HiShoppingCart } from 'react-icons/hi';
 import { FaUserCircle } from 'react-icons/fa';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutRedux } from '../redux/userSlice';
+import {toast} from 'react-hot-toast';
 
 const Header = () => {
+  const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
 
   const {user} = useSelector((state)=>state.user);
+  console.log(user);
 
   const handleChangeMenu = e => {
     e.preventDefault();
     setShowMenu(!showMenu);
   };
+
+  const handleLogout = ()  => {
+      dispatch(logoutRedux())
+      toast.success("Logout successfully..!")
+  }
+
   return (
     <header className='shadow-md fixed w-full h-16 px-4 md:px-6 z-50 bg-white'>
       <div className='flex items-center h-full justify-between'>
@@ -62,9 +72,9 @@ const Header = () => {
                     New Product
                   </p> 
                 </Link>
-                {user ? (
-                  <Link to='logout'>
-                    <p className='whitespace-nowrap cursor-pointer bg-red-500 hover:bg-red-400 text-white rounded-md text-center mt-1'>Logout</p>
+                {user._id != '' ? (
+                  <Link to='login'>
+                    <p className='whitespace-nowrap cursor-pointer bg-red-500 hover:bg-red-400 text-white rounded-md text-center mt-1' onClick={handleLogout}>Logout</p>
                   </Link>
                 ) : (
                   <Link to='login'>
