@@ -3,6 +3,8 @@ import { BsCloudUpload } from 'react-icons/bs';
 import convertToBase64 from '../utils/convertToBase64';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { UploadProducts } from '../utils/helper';
+import { toast } from 'react-hot-toast';
 
 const NewProduct = () => {
   const [uploadedImage, setUploadImage] = useState();
@@ -26,7 +28,8 @@ const NewProduct = () => {
       values = await Object.assign(values, {
         Image: uploadedImage || '',
       });
-      console.log(values);
+      UploadProducts(values)
+      formik.resetForm();
     },
   });
 
@@ -64,10 +67,11 @@ const NewProduct = () => {
           onBlur={formik.handleBlur}
           value={formik.values.category}
         >
-          <option>Fruits</option>
-          <option>Vegetables</option>
-          <option>Food items</option>
-          <option>Meat</option>
+          <option value={"none"}>select category</option>
+          <option value={"fruits"}>Fruits</option>
+          <option value={"vegetables"}>Vegetables</option>
+          <option value={"food items"}>Food items</option>
+          <option value={"meat"}>Meat</option>
         </select>
 
         {formik.touched.category && formik.errors.category ? (

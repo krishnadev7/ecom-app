@@ -41,3 +41,21 @@ export async function LogIn(creds){
     return toast.error(error);
   }
 }
+
+/** uploading products to server */
+export async function UploadProducts(data){
+  try {
+    const fetchData = await fetch(`${base_server_url}/uploadProducts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+    const resData = await fetchData.json()
+    return toast.success(resData.msg)
+  } catch (error) {
+    console.log(error);
+    return toast.error(error)
+  }
+}

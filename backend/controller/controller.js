@@ -1,4 +1,5 @@
 const User = require('../database/model/userModel');
+const Product = require('../database/model/productsModel');
 const bcrypt = require('bcrypt')
 
 /** http://localhost:8000/api/signup */
@@ -47,4 +48,12 @@ const login = async (req,res) => {
     }
 }
 
-module.exports = {signup,login}
+/** http://localhost:8000/api/uploadProducts */
+const uploadProducts = async (req,res) => {
+    console.log(req.body);
+    const data = await Product(req.body);
+    data.save();
+    res.status(200).json({msg: 'Uploaded Successfully...!'})
+}
+
+module.exports = {signup,login,uploadProducts}
