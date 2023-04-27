@@ -5,23 +5,23 @@ import { FaUserCircle } from 'react-icons/fa';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutRedux } from '../redux/userSlice';
-import {toast} from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 const Header = () => {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
 
-  const {user} = useSelector((state)=>state.user);
+  const { user } = useSelector(state => state.user);
 
   const handleChangeMenu = e => {
     e.preventDefault();
     setShowMenu(!showMenu);
   };
 
-  const handleLogout = ()  => {
-      dispatch(logoutRedux())
-      toast.success("Logout successfully..!")
-  }
+  const handleLogout = () => {
+    dispatch(logoutRedux());
+    toast.success('Logout successfully..!');
+  };
 
   return (
     <header className='shadow-md fixed w-full h-16 px-4 md:px-6 z-50 bg-white'>
@@ -67,13 +67,20 @@ const Header = () => {
             {showMenu && (
               <div className='absolute right-2 text-lg text-black bg-white shadow drop-shadow-md py-2 px-2'>
                 <Link to='newproduct'>
-                  <p className='whitespace-nowrap cursor-pointer'>
-                    New Product
-                  </p> 
+                  {user.email === import.meta.env.VITE_APP_ADMIN_EMAIL && (
+                    <p className='whitespace-nowrap cursor-pointer'>
+                      New Product
+                    </p>
+                  )}
                 </Link>
                 {user._id != '' ? (
                   <Link to='login'>
-                    <p className='whitespace-nowrap cursor-pointer bg-red-500 hover:bg-red-400 text-white rounded-md text-center mt-1' onClick={handleLogout}>Logout</p>
+                    <p
+                      className='whitespace-nowrap cursor-pointer bg-red-500 hover:bg-red-400 text-white rounded-md px-1 text-center mt-1'
+                      onClick={handleLogout}
+                    >
+                      Logout ({user.firstName})
+                    </p>
                   </Link>
                 ) : (
                   <Link to='login'>
