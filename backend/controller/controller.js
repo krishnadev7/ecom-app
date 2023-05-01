@@ -56,4 +56,10 @@ const uploadProducts = async (req,res) => {
     res.status(200).json({msg: 'Uploaded Successfully...!'})
 }
 
-module.exports = {signup,login,uploadProducts}
+/** http://localhost:8000/api/product */
+const getProducts = async (req,res) => {
+    const data = await Product.find({});
+    res.send(data)
+}
+
+module.exports = {signup,login,uploadProducts,getProducts}
