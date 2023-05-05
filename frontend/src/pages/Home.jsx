@@ -2,10 +2,20 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import deliveryBike from '../assets/food-delivery-bike.png';
 import HomeCard from '../components/HomeCard';
+import CardFeature from '../components/CardFeature';
+import {GrPrevious} from 'react-icons/gr'
+import {GrNext} from 'react-icons/gr'
 
 const Home = () => {
   const productList = useSelector(state => state.product.productList);
   const homeProductList = productList.slice(0, 5);
+  const vegetablesList = productList.filter(
+    data => data.category === 'vegetables'
+  );
+  console.log(homeProductList);
+
+  const loadingArray = new Array(3).fill(null);
+  const loadingVegArray = new Array(10).fill(null);
 
   return (
     <div className='p-2 md:p-4'>
@@ -32,19 +42,52 @@ const Home = () => {
           </button>
         </div>
         <div className='md:w-1/2 flex flex-wrap gap-5 justify-center p-4'>
-          {homeProductList?.map((list, i) => {
+          {homeProductList[0]
+            ? homeProductList.map(list => {
+                return (
+                  <HomeCard
+                    key={list._id}
+                    Image={list.Image}
+                    category={list.category}
+                    description={list.description}
+                    name={list.name}
+                    price={list.price}
+                  />
+                );
+              })
+            : loadingArray.map((list, i) => {
+                return <HomeCard key={i} loading={'Loading...'} />;
+              })}
+        </div>
+      </div>
+
+      <div className=''>
+        <div className='w-full flex items-center'>
+          <h2 className='font-bold text-4xl text-slate-800'>
+            Fresh Vegetables
+          </h2>
+          <div className='ml-auto gap-2 flex'>
+            <button className='bg-slate-300 hover:bg-slate-400 text-lg p-2'>{<GrPrevious/>}</button>
+            <button className='bg-slate-300 hover:bg-slate-400 text-lg p-2'>{<GrNext/>}</button>
+          </div>
+        </div>
+        <div className='flex gap-3 overflow-x-scroll scrollbar-none'>
+          {vegetablesList[0] ? vegetablesList.map(data => {
             return (
-              <div key={i}>
-                <HomeCard 
-                Image={list.Image} 
-                category={list.category}
-                description={list.description}
-                name={list.name}
-                price={list.price}
-                />
-              </div>
-            );
-          })}
+                <CardFeature
+                key={data._id}
+                name={data.name}
+                price={data.price}
+                description={data.description}
+                image={data.Image}
+                category={data.category}
+              />
+            )
+          }):
+            loadingVegArray.map(list => {
+              return(<CardFeature loading="Loading..."/>)
+            })
+          }
         </div>
       </div>
     </div>
