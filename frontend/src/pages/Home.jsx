@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import deliveryBike from '../assets/food-delivery-bike.png';
 import HomeCard from '../components/HomeCard';
@@ -16,6 +16,17 @@ const Home = () => {
 
   const loadingArray = new Array(3).fill(null);
   const loadingVegArray = new Array(10).fill(null);
+
+  const sliderRef = useRef();
+
+  const nextProduct = () => {
+    sliderRef.current.scrollLeft += 200;
+  }
+  
+  const prevProduct = () => {
+    sliderRef.current.scrollLeft -= 200;
+    console.log('clicked');
+  }
 
   return (
     <div className='p-2 md:p-4'>
@@ -67,11 +78,11 @@ const Home = () => {
             Fresh Vegetables
           </h2>
           <div className='ml-auto gap-2 flex'>
-            <button className='bg-slate-300 hover:bg-slate-400 text-lg p-2'>{<GrPrevious/>}</button>
-            <button className='bg-slate-300 hover:bg-slate-400 text-lg p-2'>{<GrNext/>}</button>
+            <button className='bg-slate-300 hover:bg-slate-400 text-lg p-2' onClick={prevProduct}>{<GrPrevious/>}</button>
+            <button className='bg-slate-300 hover:bg-slate-400 text-lg p-2' onClick={nextProduct}>{<GrNext/>}</button>
           </div>
         </div>
-        <div className='flex gap-3 overflow-x-scroll scrollbar-none'>
+        <div ref={sliderRef} className='flex gap-3 overflow-x-scroll scrollbar-none scroll-smooth transition-all'>
           {vegetablesList[0] ? vegetablesList.map(data => {
             return (
                 <CardFeature
