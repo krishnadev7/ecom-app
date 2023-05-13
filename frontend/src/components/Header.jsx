@@ -39,8 +39,8 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className='flex items-center gap-4 md:gap-7'>
-          <nav className='flex gap-4 md:gap-7 text-base md:text-lg'>
+        <div className='flex items-center gap-4 md:gap-7 text-center '>
+          <nav className='gap-4 md:gap-7 text-base md:text-lg hidden md:flex'>
             <Link to=''>Home</Link>
             <Link to='menu'>Menu</Link>
             <Link to='about'>About</Link>
@@ -87,6 +87,12 @@ const Header = () => {
                     <p className='whitespace-nowrap cursor-pointer'>Login</p>
                   </Link>
                 )}
+                <nav className='gap-4 md:gap-7 text-base md:text-lg px-2 py-2 flex flex-col md:hidden'>
+            <Link to=''>Home</Link>
+            <Link to='menu'>Menu</Link>
+            <Link to='about'>About</Link>
+            <Link to='contact'>Contact</Link>
+          </nav>
               </div>
             )}
           </div>

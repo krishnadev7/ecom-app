@@ -20,12 +20,11 @@ const Home = () => {
   const sliderRef = useRef();
 
   const nextProduct = () => {
-    sliderRef.current.scrollLeft += 200;
+    sliderRef.current.scrollLeft += 420;
   }
   
   const prevProduct = () => {
-    sliderRef.current.scrollLeft -= 200;
-    console.log('clicked');
+    sliderRef.current.scrollLeft -= 420;
   }
 
   return (
